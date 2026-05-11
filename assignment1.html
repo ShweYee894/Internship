@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="day2.css" />
+  </head>
+  <body>
+    <div class="container">
+      <section class="left-section">
+        <h2>Update Variables</h2>
+
+        <label for="name">Name(String):</label>
+        <input type="text" name="name" id="name" value="Amenda" />
+
+        <label for="age">Age(Number):</label>
+        <input type="number" name="age" id="age" value="24" />
+
+        <label for="status">VIP Status(Boolean):</label>
+        <input type="checkbox" name="status" id="status" />
+
+        <label for="cardColor">Card Color:</label>
+        <input type="color" name="cardColor" id="cardColor" value="#acd324" />
+      </section>
+
+      <section class="right-section">
+        <h2>Live DOM Output</h2>
+
+        <div class="card" id="outputCard">
+          <p id="vipStatus"></p>
+
+          <p id="inputName"></p>
+
+          <p>Age : <span id="inputAge"></span></p>
+          <script>
+            const name = document.getElementById("name");
+            const age = document.getElementById("age");
+            const status = document.getElementById("status");
+            const cardColor = document.getElementById("cardColor");
+
+            name.addEventListener("input", function () {
+              document.getElementById("inputName").innerText = name.value;
+            });
+
+            age.addEventListener("input", function () {
+              document.getElementById("inputAge").innerText = age.value;
+            });
+
+            if (status.checked) {
+              status.addEventListener("input", function () {
+                document.getElementById("vipStatus").innerText =
+                  " VIP Customer";
+              });
+            } else {
+              status.addEventListener("change", function () {
+                document.getElementById("vipStatus").innerText = "";
+              });
+            }
+
+            cardColor.addEventListener("input", function () {
+              document.getElementById("outputCard").style.backgroundColor =
+                cardColor.value;
+            });
+          </script>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

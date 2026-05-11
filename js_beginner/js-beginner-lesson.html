@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript for Beginners</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0e17;
+  --surface: #1a1928;
+  --surface2: #242336;
+  --border: #2e2c45;
+  --purple: #7f77dd;
+  --purple-light: #afa9ec;
+  --purple-dim: #26215c;
+  --green: #1d9e75;
+  --green-light: #e1f5ee;
+  --green-dark: #085041;
+  --teal: #5dcaa5;
+  --red: #e24b4a;
+  --red-light: #fcebeb;
+  --red-dark: #501313;
+  --amber: #ef9f27;
+  --text: #f0eeff;
+  --text2: #a09cbf;
+  --text3: #6b677f;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'Sora', system-ui, sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon { width: 32px; height: 32px; background: var(--purple); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.logo-text { font-size: 15px; font-weight: 600; color: var(--text); }
+.logo-sub { font-size: 12px; color: var(--text3); margin-top: 1px; }
+.score-badge { font-family: var(--mono); font-size: 13px; color: var(--purple-light); background: var(--purple-dim); padding: 4px 12px; border-radius: 20px; }
+
+.layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 57px); }
+
+/* Sidebar */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 1rem;
+  position: sticky;
+  top: 57px;
+  height: calc(100vh - 57px);
+  overflow-y: auto;
+}
+.sidebar-title { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text3); margin-bottom: 1rem; padding: 0 0.5rem; }
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all .2s;
+  margin-bottom: 2px;
+  font-size: 13px;
+  color: var(--text2);
+  border: 1px solid transparent;
+}
+.sidebar-item:hover { background: var(--surface2); color: var(--text); }
+.sidebar-item.active { background: var(--purple-dim); border-color: var(--purple); color: var(--purple-light); }
+.sidebar-item.done { color: var(--teal); }
+.sidebar-item.done .si-num { background: var(--green); color: #fff; }
+.si-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--surface2);
+  color: var(--text3);
+  font-size: 11px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--mono);
+}
+.sidebar-item.active .si-num { background: var(--purple); color: #fff; }
+.si-check { margin-left: auto; font-size: 12px; }
+
+/* Progress */
+.progress-section { padding: 1.5rem 1rem 0; }
+.progress-bar-wrap { height: 4px; background: var(--surface2); border-radius: 2px; margin-top: .4rem; }
+.progress-bar-fill { height: 4px; background: var(--green); border-radius: 2px; transition: width .4s; }
+.progress-label { font-size: 11px; color: var(--text3); display: flex; justify-content: space-between; }
+
+/* Main content */
+.main { padding: 2rem; max-width: 760px; }
+
+.lesson-header { margin-bottom: 1.5rem; }
+.lesson-tag { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--purple-light); margin-bottom: .4rem; }
+.lesson-title { font-size: 28px; font-weight: 600; color: var(--text); margin-bottom: .75rem; }
+.lesson-desc { font-size: 15px; color: var(--text2); line-height: 1.75; }
+
+.concepts { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 10px; margin: 1.5rem 0; }
+.concept { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .85rem; }
+.concept-name { font-family: var(--mono); font-size: 13px; color: var(--purple-light); margin-bottom: 5px; font-weight: 500; }
+.concept-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+.tip {
+  background: linear-gradient(135deg, #1e1c3a, #1a1928);
+  border: 1px solid var(--purple-dim);
+  border-left: 3px solid var(--purple);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--purple-light);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+.tip strong { color: var(--purple-light); font-weight: 600; }
+
+/* Code area */
+.code-block { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+.code-toolbar {
+  background: var(--surface2);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.code-lang { font-family: var(--mono); font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 6px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot-r { background: #ff5f57; }
+.dot-y { background: #febc2e; }
+.dot-g { background: #28c840; }
+.run-btn {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 16px;
+  background: var(--purple);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s;
+  letter-spacing: .02em;
+}
+.run-btn:hover { background: #6c64c8; }
+.run-btn:active { transform: scale(.97); }
+textarea.editor {
+  width: 100%;
+  min-height: 150px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.65;
+  background: #0a0915;
+  color: #e0d8ff;
+  border: none;
+  outline: none;
+  resize: vertical;
+  display: block;
+}
+.output {
+  padding: 12px 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.65;
+  min-height: 40px;
+  background: var(--surface2);
+  border-top: 1px solid var(--border);
+  color: var(--text3);
+}
+.out-line { margin: 1px 0; }
+.out-line.s { color: var(--teal); }
+.out-line.e { color: var(--red); }
+
+/* Quiz */
+.quiz-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.quiz-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--amber); margin-bottom: .5rem; }
+.quiz-q { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
+.quiz-opts { display: flex; flex-direction: column; gap: 7px; }
+.quiz-opt {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: var(--sans);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text2);
+  transition: all .2s;
+}
+.quiz-opt:hover:not(:disabled) { border-color: var(--purple); color: var(--text); background: var(--purple-dim); }
+.quiz-opt.cor { background: #0d2e22; border-color: var(--teal); color: var(--teal); }
+.quiz-opt.wrg { background: #2e0d0d; border-color: var(--red); color: var(--red); }
+.quiz-feedback {
+  margin-top: .75rem;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.qf-ok { background: #0d2e22; color: var(--teal); border: 1px solid #1d5e44; }
+.qf-bad { background: #2e0d0d; color: #f09595; border: 1px solid #6e1f1f; }
+
+/* Navigation */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.nav-btn2 {
+  padding: 9px 22px;
+  font-size: 14px;
+  font-family: var(--sans);
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all .2s;
+}
+.nav-btn2:hover:not(:disabled) { border-color: var(--purple); color: var(--text); }
+.nav-btn2:disabled { opacity: .3; cursor: default; }
+.nav-btn2.primary { background: var(--purple); border-color: var(--purple); color: #fff; }
+.nav-btn2.primary:hover { background: #6c64c8; }
+.step-info { font-size: 13px; color: var(--text3); font-family: var(--mono); }
+
+/* Complete screen */
+.win {
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--teal);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+.win-icon { font-size: 42px; margin-bottom: 10px; }
+.win-title { font-size: 22px; font-weight: 600; color: var(--teal); margin-bottom: 8px; }
+.win-sub { font-size: 14px; color: var(--text2); line-height: 1.7; }
+
+@media (max-width: 680px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .main { padding: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">JS</div>
+    <div>
+      <div class="logo-text">JavaScript for Beginners</div>
+      <div class="logo-sub">18 interactive lessons</div>
+    </div>
+  </div>
+  <div class="score-badge" id="scoreBadge">0 / 10 done</div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="progress-section">
+      <div class="progress-label"><span>Progress</span><span id="pct">0%</span></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbFill" style="width:0%"></div></div>
+    </div>
+    <br>
+    <div class="sidebar-title">Lessons</div>
+    <div id="sidebarList"></div>
+  </aside>
+
+  <main class="main" id="mainContent"></main>
+</div>
+
+<script>
+const lessons = [
+  {
+    t:"Variables",
+    d:"Variables are containers that store values. Use <code style='font-family:var(--mono);background:var(--surface2);padding:1px 5px;border-radius:3px;font-size:13px;color:var(--purple-light)'>const</code> when a value won't change, and <code style='font-family:var(--mono);background:var(--surface2);padding:1px 5px;border-radius:3px;font-size:13px;color:var(--purple-light)'>let</code> when it will. Avoid <code style='font-family:var(--mono);background:var(--surface2);padding:1px 5px;border-radius:3px;font-size:13px;color:var(--purple-light)'>var</code> in modern JavaScript.",
+    c:[{n:"const",d:"Locked after assignment — use by default."},{n:"let",d:"Reassignable — use when values change."},{n:"var",d:"Old-style declaration — avoid it."}],
+    tip:"Start with const everywhere. Upgrade to let only when you actually need to reassign a value.",
+    code:`const name = "Alice";\nconst age = 25;\nlet score = 0;\n\nconsole.log(name, age);\n\nscore = 10;\nconsole.log("Score:", score);`,
+    q:{q:"Which keyword should you use for a value that never changes?",o:["var","let","const","fixed"],a:2,e:"const — short for constant — locks the value in after first assignment."}
+  },
+  {
+    t:"Data Types",
+    d:"JavaScript has several built-in types. Strings hold text, numbers hold numeric values, booleans are true/false, null is intentionally empty, and undefined means a value hasn't been set yet.",
+    c:[{n:"String",d:'Text in quotes. e.g. "Hello!"'},{n:"Number",d:"Integers or decimals. 42, 3.14"},{n:"Boolean",d:"true or false only."},{n:"null/undefined",d:"Empty (intentional) vs unset."}],
+    tip:'Use typeof to inspect a value\'s type at any point. typeof 42 returns "number".',
+    code:`const msg = "Hello!";\nconst pi = 3.14;\nconst active = true;\nlet missing;\n\nconsole.log(typeof msg);\nconsole.log(typeof pi);\nconsole.log(typeof active);\nconsole.log(typeof missing);\n\n// Template literals — modern string formatting\nconst info = \`Pi is roughly \${pi}\`;\nconsole.log(info);`,
+    q:{q:'What does typeof "hello" return?',o:["text","word","string","char"],a:2,e:'typeof always returns a lowercase string — text values return "string".'}
+  },
+  {
+    t:"Functions",
+    d:"Functions are reusable blocks of code. Define them once and call them anywhere. They accept inputs called parameters and can return an output value back to the caller.",
+    c:[{n:"function",d:"Classic named function declaration."},{n:"parameters",d:"Inputs the function receives."},{n:"return",d:"Sends a value back to the caller."},{n:"() =>",d:"Arrow function — shorter modern syntax."}],
+    tip:"A function with no return statement gives back undefined automatically.",
+    code:`function greet(name) {\n  return "Hello, " + name + "!";\n}\n\nconst add = (a, b) => a + b;\nconst square = n => n * n;\n\nconsole.log(greet("World"));\nconsole.log(add(5, 3));\nconsole.log(square(7));`,
+    q:{q:"What keyword sends a value back from a function?",o:["send","output","return","give"],a:2,e:"return exits the function and passes the value back to whoever called it."}
+  },
+  {
+    t:"Conditionals",
+    d:"Conditionals let your code make decisions. if / else if / else runs different blocks depending on whether conditions are true or false.",
+    c:[{n:"if",d:"Runs when the condition is true."},{n:"else if",d:"Checked when prior condition failed."},{n:"else",d:"Fallback when all conditions fail."},{n:"===",d:"Strict equality: value AND type."}],
+    tip:"Always use === not ==. Double-equals does type coercion and causes subtle bugs.",
+    code:`const temp = 28;\n\nif (temp > 30) {\n  console.log("Hot outside!");\n} else if (temp > 20) {\n  console.log("Nice and warm.");\n} else {\n  console.log("Grab a jacket!");\n}\n\n// Ternary shorthand\nconst label = temp > 25 ? "warm" : "cool";\nconsole.log("It is:", label);`,
+    q:{q:"Which operator checks both value AND type?",o:["=","==","===","equals"],a:2,e:"=== is strict equality — it never coerces types, making comparisons safe and predictable."}
+  },
+  {
+    t:"Arrays",
+    d:"An array is an ordered list of values stored in one variable. Each item has an index starting at 0. Arrays have built-in methods to add, remove, and transform items.",
+    c:[{n:"[ ]",d:"Square brackets create arrays."},{n:".length",d:"Number of items in the array."},{n:".push()",d:"Adds an item to the end."},{n:".map()",d:"Transforms every item into a new array."}],
+    tip:"Arrays are zero-indexed — the first item is always at index 0, not 1.",
+    code:`const fruits = ["apple", "banana", "cherry"];\n\nconsole.log(fruits[0]);\nconsole.log(fruits.length);\n\nfruits.push("mango");\nconsole.log(fruits);\n\nconst upper = fruits.map(f => f.toUpperCase());\nconsole.log(upper);\n\nconst long = fruits.filter(f => f.length > 5);\nconsole.log(long);`,
+    q:{q:"What index holds the first item of an array?",o:["1","0","-1","first"],a:1,e:"Zero-indexing means index 0 is always the first element."}
+  },
+  {
+    t:"Loops",
+    d:"Loops repeat a block of code. The classic for loop gives you precise index control. for...of is a cleaner way to loop over every item in an array. while loops repeat until a condition becomes false.",
+    c:[{n:"for",d:"Index-based loop with full control."},{n:"for...of",d:"Loops over each value in an array."},{n:"while",d:"Repeats while condition is true."},{n:"break",d:"Exits the loop immediately."}],
+    tip:"Use for...of when you don't need the index — it's far more readable.",
+    code:`// Classic for\nfor (let i = 1; i <= 5; i++) {\n  console.log("Count:", i);\n}\n\n// for...of\nconst colors = ["red", "green", "blue"];\nfor (const color of colors) {\n  console.log(color);\n}\n\n// while\nlet x = 10;\nwhile (x > 0) { x -= 3; }\nconsole.log("Final x:", x);`,
+    q:{q:"Which loop is cleanest for iterating over an array's values?",o:["while","for","for...of","do...while"],a:2,e:"for...of reads naturally as 'for each item of this array' — no index management needed."}
+  },
+  {
+    t:"Objects",
+    d:"Objects store related data as key-value pairs. They group properties that describe one thing — like a user, product, or setting. Objects can also contain functions, called methods.",
+    c:[{n:"{ }",d:"Curly braces create an object."},{n:"dot notation",d:"Access a property: obj.name"},{n:"bracket notation",d:'Dynamic access: obj["key"]'},{n:"methods",d:"Functions stored as object properties."}],
+    tip:"You can add new properties to an object at any time just by assigning to them.",
+    code:`const person = {\n  name: "Alice",\n  age: 25,\n  city: "Singapore",\n  greet() {\n    return \`Hi, I'm \${this.name}!\`;\n  }\n};\n\nconsole.log(person.name);\nconsole.log(person["age"]);\nconsole.log(person.greet());\n\nperson.job = "Developer";\nconsole.log(person.job);\n\nconst { name, city } = person;\nconsole.log(name, "lives in", city);`,
+    q:{q:"How do you access the 'age' property of an object called user?",o:["user->age","user[age]","user.age","user::age"],a:2,e:"Dot notation (user.age) is the standard, readable way to access object properties."}
+  },
+  {
+    t:"Scope & Closures",
+    d:"Scope controls where variables are visible. Block scope means a variable only exists inside the { } it was declared in. Closures let inner functions remember variables from their outer scope — even after the outer function has returned.",
+    c:[{n:"global scope",d:"Visible everywhere in the file."},{n:"block scope",d:"let/const inside { } stay there."},{n:"function scope",d:"Variables inside a function stay there."},{n:"closure",d:"Inner function remembers outer vars."}],
+    tip:"Declare variables as close to where they're used as possible — narrow scope means fewer surprises.",
+    code:`const global = "I'm global";\n\nfunction demo() {\n  const local = "I'm local";\n  console.log(global);   // works!\n  console.log(local);    // works!\n}\ndemo();\nconsole.log(global);   // works!\n// console.log(local); // ReferenceError!\n\n// Closure example\nfunction makeCounter() {\n  let count = 0;\n  return () => ++count;\n}\nconst counter = makeCounter();\nconsole.log(counter());\nconsole.log(counter());\nconsole.log(counter());`,
+    q:{q:"Where is a variable declared with let inside a function accessible?",o:["Everywhere","Only in that function","Only globally","In child functions only"],a:1,e:"let and const are block-scoped — a variable inside a function is invisible outside it."}
+  },
+  {
+    t:"Array Methods",
+    d:"JavaScript arrays have powerful higher-order methods for searching, transforming, and summarising data. These are among the most used tools in everyday JavaScript.",
+    c:[{n:".filter()",d:"Returns items that pass a test."},{n:".find()",d:"Returns the first match."},{n:".reduce()",d:"Collapses array to a single value."},{n:".includes()",d:"Checks if an item exists."}],
+    tip:".map(), .filter(), and .reduce() never modify the original array — they return a new one.",
+    code:`const nums = [1,2,3,4,5,6,7,8];\n\nconst evens = nums.filter(n => n % 2 === 0);\nconsole.log("Evens:", evens);\n\nconst firstBig = nums.find(n => n > 5);\nconsole.log("First > 5:", firstBig);\n\nconst sum = nums.reduce((acc, n) => acc + n, 0);\nconsole.log("Sum:", sum);\n\nconsole.log("Has 4?", nums.includes(4));\nconsole.log("Has 9?", nums.includes(9));`,
+    q:{q:"Which method returns a NEW array with only items that pass a test?",o:[".find()",".reduce()",".filter()",".includes()"],a:2,e:".filter() tests every item and returns a new array containing only those that pass."}
+  },
+  {
+    t:"Error Handling",
+    d:"Errors happen. try / catch lets you handle them gracefully without crashing the program. Wrap risky code in try, handle any thrown error in catch, and use finally for cleanup that always runs.",
+    c:[{n:"try",d:"Wraps code that might throw an error."},{n:"catch(e)",d:"Runs if an error is thrown."},{n:"finally",d:"Always runs — error or not."},{n:"throw",d:"Manually create and throw an error."}],
+    tip:"Always log or display error.message in catch so you know exactly what went wrong.",
+    code:`// try / catch / finally\ntry {\n  const data = JSON.parse("{bad json}");\n} catch (err) {\n  console.log("Caught:", err.message);\n} finally {\n  console.log("This always runs.");\n}\n\n// Custom errors\nfunction divide(a, b) {\n  if (b === 0) throw new Error("Cannot divide by zero!");\n  return a / b;\n}\n\ntry {\n  console.log(divide(10, 2));\n  console.log(divide(5, 0));\n} catch (e) {\n  console.log("Error:", e.message);\n}`,
+    q:{q:"Which block ALWAYS runs whether an error occurred or not?",o:["try","catch","finally","throw"],a:2,e:"finally always runs — perfect for cleanup like resetting state or closing connections."}
+  },
+  {
+    t:"String Methods",
+    d:"Strings come packed with built-in methods for searching, slicing, transforming, and formatting text. These are essential for working with user input, URLs, and any text data.",
+    c:[{n:".toUpperCase()",d:"Returns the string in all caps."},{n:".includes()",d:"Checks if a substring exists."},{n:".slice()",d:"Extracts part of a string."},{n:".split()",d:"Splits string into an array."}],
+    tip:"Strings are immutable — methods always return a new string, never modify the original.",
+    code:`const str = "  Hello, JavaScript World!  ";\n\nconsole.log(str.trim());              // remove whitespace\nconsole.log(str.trim().toLowerCase()); // lowercase\nconsole.log(str.includes("Java"));     // search\nconsole.log(str.slice(9, 19));         // extract\n\n// split & join\nconst words = "one,two,three".split(",");\nconsole.log(words);\nconsole.log(words.join(" - "));\n\n// replace\nconsole.log("Hello World".replace("World", "JS"));`,
+    q:{q:"What does .split(',') do to a string?",o:["Joins items with commas","Removes commas","Splits the string into an array at each comma","Counts the commas"],a:2,e:".split(separator) breaks a string apart at each separator and returns an array of the pieces."}
+  },
+  {
+    t:"Destructuring & Spread",
+    d:"Destructuring lets you unpack values from arrays or objects into separate variables cleanly. The spread operator (...) expands an array or object into individual items — great for copying and merging.",
+    c:[{n:"{ } destructure",d:"Unpack object properties into variables."},{n:"[ ] destructure",d:"Unpack array items by position."},{n:"...spread",d:"Expand an array/object in place."},{n:"...rest",d:"Collect remaining items into an array."}],
+    tip:"Destructuring and spread are among the most widely used modern JS patterns — you'll see them everywhere.",
+    code:`// Object destructuring\nconst user = { name: "Alice", age: 25, city: "Singapore" };\nconst { name, age } = user;\nconsole.log(name, age);\n\n// Array destructuring\nconst [first, second, ...rest] = [10, 20, 30, 40, 50];\nconsole.log(first, second);\nconsole.log("Rest:", rest);\n\n// Spread: copy & merge\nconst a = [1, 2, 3];\nconst b = [4, 5, 6];\nconsole.log([...a, ...b]);\n\nconst defaults = { theme: "dark", lang: "en" };\nconst settings = { ...defaults, lang: "fr" };\nconsole.log(settings);`,
+    q:{q:"What does the spread operator (...) do to an array?",o:["Compresses it","Expands its items in place","Reverses it","Removes duplicates"],a:1,e:"The spread operator (...arr) expands an array into its individual elements — useful for copying, merging, and passing items as arguments."}
+  },
+  {
+    t:"Classes & OOP",
+    d:"Classes are blueprints for creating objects. They bundle related data (properties) and behaviour (methods) together. JavaScript classes use prototypal inheritance under the hood, with a clean modern syntax.",
+    c:[{n:"class",d:"Defines a blueprint for objects."},{n:"constructor()",d:"Runs when a new instance is created."},{n:"this",d:"Refers to the current object instance."},{n:"extends",d:"Creates a subclass that inherits from another."}],
+    tip:"Think of a class as a cookie cutter and instances as the cookies. Each cookie shares the same shape but has its own dough.",
+    code:`class Animal {\n  constructor(name, sound) {\n    this.name = name;\n    this.sound = sound;\n  }\n  speak() {\n    return \`\${this.name} says \${this.sound}!\`;\n  }\n}\n\n// Subclass (inheritance)\nclass Dog extends Animal {\n  constructor(name) {\n    super(name, "Woof");\n  }\n  fetch() {\n    return \`\${this.name} fetches the ball!\`;\n  }\n}\n\nconst cat = new Animal("Cat", "Meow");\nconst dog = new Dog("Rex");\n\nconsole.log(cat.speak());\nconsole.log(dog.speak());\nconsole.log(dog.fetch());`,
+    q:{q:"What is the purpose of the constructor() method in a class?",o:["It destroys an instance","It runs once when a new instance is created","It defines static methods","It exports the class"],a:1,e:"constructor() is called automatically with new — it sets up the initial state of each new object instance."}
+  },
+  {
+    t:"DOM Manipulation",
+    d:"The DOM (Document Object Model) is the browser's live representation of your HTML. JavaScript can select any element, read or change its content, and update its styles — all in real time.",
+    c:[{n:"querySelector",d:"Select one element by CSS selector."},{n:"querySelectorAll",d:"Select all matching elements."},{n:".textContent",d:"Read or set the text of an element."},{n:".style",d:"Read or set inline CSS on an element."}],
+    tip:"querySelector uses the same selectors as CSS — '#id', '.class', 'tag' all work.",
+    code:`// These run in a real browser — here we simulate the output:\n\n// Imagine: <h1 id="title">Hello</h1>\n// document.querySelector('#title').textContent = 'Hello, JS!';\n\n// Creating elements\nconst div = document.createElement('div');\ndiv.textContent = 'I was made by JS!';\ndiv.style.color = 'teal';\nconsole.log(div.textContent);\nconsole.log(div.style.color);\n\n// Reading & writing attributes\ndiv.setAttribute('data-id', '42');\nconsole.log(div.getAttribute('data-id'));\n\n// classList\ndiv.classList.add('card');\ndiv.classList.add('active');\nconsole.log(div.className);\ndiv.classList.remove('active');\nconsole.log(div.className);`,
+    q:{q:"Which method selects the FIRST element matching a CSS selector?",o:["getElementById","querySelectorAll","querySelector","getElement"],a:2,e:"querySelector('#id') or querySelector('.class') returns the first matching element, just like CSS targeting."}
+  },
+  {
+    t:"Events",
+    d:"Events let your code respond to user actions — clicks, keypresses, form submissions, and more. You attach an event listener to an element and provide a callback function that runs when the event fires.",
+    c:[{n:"addEventListener",d:"Attach a listener to an element."},{n:"event object",d:"Passed to your callback with event details."},{n:"event.target",d:"The element that triggered the event."},{n:"removeEventListener",d:"Detach a listener when no longer needed."}],
+    tip:"Always use addEventListener over inline onclick attributes — it keeps your HTML clean and lets you attach multiple listeners.",
+    code:`// Simulated event handling (real code runs in browser)\nfunction handleClick(event) {\n  console.log("Clicked!");\n  console.log("Target tag:", event.target?.tagName ?? "button");\n}\n\nfunction handleInput(event) {\n  console.log("Typed:", event.target?.value ?? "hello world");\n}\n\n// In a real page:\n// document.querySelector('button').addEventListener('click', handleClick);\n// document.querySelector('input').addEventListener('input', handleInput);\n\n// Simulate the calls:\nhandleClick({ target: { tagName: "BUTTON" } });\nhandleInput({ target: { value: "hello world" } });\n\n// Keyboard events\ndocument.addEventListener('keydown', e => {\n  // console.log('Key pressed:', e.key);\n});\nconsole.log("Event listeners attached!");`,
+    q:{q:"Which method is the modern way to attach an event handler to an element?",o:["onclick","attachEvent","addEventListener","on"],a:2,e:"addEventListener is the standard — it supports multiple listeners on one element and keeps HTML free of inline JS."}
+  },
+  {
+    t:"Promises & async/await",
+    d:"Asynchronous code runs without blocking the rest of your program. Promises represent a future value — either resolved (success) or rejected (failure). async/await is the modern, readable syntax for working with promises.",
+    c:[{n:"Promise",d:"Represents a value available later."},{n:".then() / .catch()",d:"Chain handlers on a promise."},{n:"async",d:"Marks a function as asynchronous."},{n:"await",d:"Pauses execution until a promise resolves."}],
+    tip:"async/await is just cleaner syntax for promises — under the hood it's the same thing.",
+    code:`// Creating a promise\nfunction wait(ms) {\n  return new Promise(resolve => setTimeout(resolve, ms));\n}\n\n// Using .then()\nPromise.resolve(42)\n  .then(val => {\n    console.log("Promise resolved with:", val);\n    return val * 2;\n  })\n  .then(val => console.log("Chained:", val));\n\n// async/await\nasync function fetchData() {\n  try {\n    // Simulating an API response\n    const data = await Promise.resolve({ user: "Alice", score: 98 });\n    console.log("Got data:", JSON.stringify(data));\n  } catch (err) {\n    console.log("Failed:", err.message);\n  }\n}\n\nfetchData();`,
+    q:{q:"What does the await keyword do inside an async function?",o:["Delays the whole page","Creates a new promise","Pauses execution until the promise settles","Cancels the promise"],a:2,e:"await pauses only that async function until the promise resolves — the rest of your app keeps running normally."}
+  },
+  {
+    t:"Fetch API",
+    d:"The Fetch API is the modern way to make HTTP requests from JavaScript. It returns a Promise, so you use async/await or .then() to handle the response. It's how web apps talk to servers and APIs.",
+    c:[{n:"fetch(url)",d:"Makes an HTTP GET request."},{n:"response.json()",d:"Parses the body as JSON."},{n:"response.ok",d:"true if status is 200–299."},{n:"{ method, body }",d:"Options for POST/PUT requests."}],
+    tip:"Always check response.ok before reading the body — a 404 or 500 still 'resolves' the promise without throwing.",
+    code:`// Fetch from a public API\nasync function getUser() {\n  try {\n    const res = await fetch("https://jsonplaceholder.typicode.com/users/1");\n    if (!res.ok) throw new Error("HTTP " + res.status);\n    const user = await res.json();\n    console.log("Name:", user.name);\n    console.log("Email:", user.email);\n    console.log("City:", user.address.city);\n  } catch (err) {\n    console.log("Error:", err.message);\n  }\n}\n\ngetUser();\nconsole.log("Fetching... (runs asynchronously)");`,
+    q:{q:"What does response.json() return?",o:["A string","A plain object directly","A Promise that resolves to the parsed JSON","An array"],a:2,e:"response.json() is itself async — it returns a Promise. You need to await it to get the actual parsed object."}
+  },
+  {
+    t:"Local Storage",
+    d:"localStorage lets you save data in the browser that persists even after the page is closed. It stores everything as strings, so use JSON.stringify to save objects and JSON.parse to read them back.",
+    c:[{n:"setItem(key, val)",d:"Save a value to storage."},{n:"getItem(key)",d:"Read a value from storage."},{n:"removeItem(key)",d:"Delete a specific key."},{n:"JSON.stringify/parse",d:"Convert objects to/from strings."}],
+    tip:"localStorage is synchronous and limited to ~5MB. For large data or complex queries, use IndexedDB.",
+    code:`// Save data\nlocalStorage.setItem("username", "Alice");\nlocalStorage.setItem("score", "98");\n\n// Read data\nconst name = localStorage.getItem("username");\nconsole.log("Saved name:", name);\n\n// Save an object (must stringify)\nconst prefs = { theme: "dark", fontSize: 16 };\nlocalStorage.setItem("prefs", JSON.stringify(prefs));\n\n// Read it back (must parse)\nconst saved = JSON.parse(localStorage.getItem("prefs"));\nconsole.log("Theme:", saved.theme);\nconsole.log("Font size:", saved.fontSize);\n\n// Remove\nlocalStorage.removeItem("score");\nconsole.log("Score after remove:", localStorage.getItem("score"));`,
+    q:{q:"Why do you need JSON.stringify() before saving an object to localStorage?",o:["To compress it","localStorage only stores strings — objects must be serialised first","To encrypt it","JSON.stringify is optional"],a:1,e:"localStorage only accepts strings. JSON.stringify converts your object to a JSON string; JSON.parse converts it back when you read it."}
+  }
+];
+
+let cur = 0;
+let qa = new Array(lessons.length).fill(undefined);
+
+function score() { return qa.filter((v,i) => v === lessons[i].q.a).length; }
+function allDone() { return score() === lessons.length; }
+
+function fmt(v) {
+  if (Array.isArray(v)) return "[" + v.map(fmt).join(", ") + "]";
+  if (typeof v === "object" && v !== null) return JSON.stringify(v);
+  return String(v);
+}
+
+function renderSidebar() {
+  const sc = score();
+  document.getElementById("scoreBadge").textContent = `${sc} / ${lessons.length} done`;
+  const pct = Math.round((sc / lessons.length) * 100);
+  document.getElementById("pct").textContent = pct + "%";
+  document.getElementById("pbFill").style.width = pct + "%";
+  document.getElementById("sidebarList").innerHTML = lessons.map((l, i) => {
+    const isDone = qa[i] !== undefined && qa[i] === l.q.a;
+    return `<div class="sidebar-item ${i===cur?'active':isDone?'done':''}" onclick="goTo(${i})">
+      <div class="si-num">${isDone ? "✓" : i+1}</div>
+      <span>${l.t}</span>
+    </div>`;
+  }).join("");
+}
+
+function renderMain() {
+  const l = lessons[cur];
+  const ans = qa[cur];
+  const isDone = ans !== undefined && ans === l.q.a;
+  const concepts = l.c.map(x =>
+    `<div class="concept"><div class="concept-name">${x.n}</div><div class="concept-desc">${x.d}</div></div>`
+  ).join("");
+  const quizOpts = l.q.o.map((o,i) => {
+    let cls = "";
+    if (ans !== undefined) cls = i===l.q.a ? " cor" : i===ans ? " wrg" : "";
+    return `<button class="quiz-opt${cls}" ${ans!==undefined?"disabled":""} onclick="check(${i})">${o}</button>`;
+  }).join("");
+  const feedback = ans !== undefined
+    ? `<div class="quiz-feedback ${ans===l.q.a?'qf-ok':'qf-bad'}">${ans===l.q.a?"✓ Correct! ":"✗ Not quite. "}${l.q.e}</div>`
+    : "";
+  const winBanner = allDone()
+    ? `<div class="win"><div class="win-icon">🎓</div><div class="win-title">All 18 lessons complete!</div><div class="win-sub">You know the core building blocks of JavaScript. Keep practicing by editing the code examples above — try changing values and see what happens.</div></div>`
+    : "";
+
+  document.getElementById("mainContent").innerHTML = `
+    <div class="lesson-header">
+      <div class="lesson-tag">Lesson ${cur+1} of ${lessons.length}${isDone ? ' &nbsp;·&nbsp; <span style="color:var(--teal)">Completed</span>' : ''}</div>
+      <h1 class="lesson-title">${l.t}</h1>
+      <p class="lesson-desc">${l.d}</p>
+    </div>
+    <div class="concepts">${concepts}</div>
+    <div class="tip">${l.tip}</div>
+    <div class="code-block">
+      <div class="code-toolbar">
+        <div class="code-lang"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>&nbsp; javascript</div>
+        <button class="run-btn" onclick="run()">▶ Run</button>
+      </div>
+      <textarea class="editor" id="ed" spellcheck="false">${l.code}</textarea>
+      <div class="output" id="out"><span style="color:var(--text3)">— click Run to see output —</span></div>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-label">Quick Check</div>
+      <div class="quiz-q">${l.q.q}</div>
+      <div class="quiz-opts">${quizOpts}</div>
+      ${feedback}
+    </div>
+    ${winBanner}
+    <div class="nav-bar">
+      <button class="nav-btn2" id="prevBtn" onclick="goTo(${cur-1})" ${cur===0?"disabled":""}>← Previous</button>
+      <span class="step-info">${cur+1} / ${lessons.length}</span>
+      <button class="nav-btn2 ${cur<lessons.length-1?'primary':''}" id="nextBtn" onclick="goTo(${cur+1})" ${cur===lessons.length-1?"disabled":""}>Next →</button>
+    </div>
+  `;
+}
+
+function render() { renderSidebar(); renderMain(); }
+
+function goTo(i) {
+  if (i < 0 || i >= lessons.length) return;
+  cur = i;
+  render();
+  window.scrollTo({top: 0, behavior:"smooth"});
+}
+
+function run() {
+  const code = document.getElementById("ed").value;
+  const out = document.getElementById("out");
+  const lines = [];
+  const orig = console.log;
+  console.log = (...args) => lines.push({ t: args.map(fmt).join(" "), s: "s" });
+  try {
+    eval(code);
+    if (!lines.length) lines.push({ t: "(no output)", s: "" });
+  } catch(e) {
+    lines.push({ t: "Error: " + e.message, s: "e" });
+  }
+  console.log = orig;
+  out.innerHTML = lines.map(l => `<div class="out-line ${l.s}">${l.t}</div>`).join("");
+}
+
+function check(i) {
+  qa[cur] = i;
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

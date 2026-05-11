@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.left-section {
+  /* background-color: aquamarine; */
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0px 10px 0px;
+}
+
+.right-section {
+  /* background-color: antiquewhite; */
+  padding: 10px;
+}
+
+.container {
+  gap: 50px;
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(217, 215, 219);
+  width: 500px;
+  margin: 100px auto;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+input {
+  border-radius: 5px;
+  padding: 4px 8px;
+}
+
+.card {
+  /* background-color: aquamarine; */
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+#vipStatus {
+  background-color: yellow;
+  padding-left: 10px;
+  border-radius: 10px;
+}

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="cssimg.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Assignment</title>
+    <link rel="stylesheet" href="cssassign.css" />
+  </head>
+  <body>
+    <header>
+      <h1>CSS Utility Simulator</h1>
+      <p>
+        Change the inputs below to see how atomic classes combine to build UIs
+      </p>
+    </header>
+
+    <nav>
+      <span style="float: left;"><a href="#">MyLogo</a></span>
+      <span><a href="#home">Home</a></span>
+      <span><a href="#about">About</a></span>
+      <span><a href="#contact">Contact</a></span>
+    </nav>
+
+    <section class="feature-section">
+      <div>Feature 1</div>
+      <div>Feature 2</div>
+      <div>Feature 3</div>
+    </section>
+
+    <div class="main-content">
+      <section class="controls-section">
+        <h2>Utility Controls</h2>
+
+        <label for="padding">Padding(Spacing)</label>
+        <select name="padding" id="padding">
+          <option value="Medium(p-8)">Medium(p-8)</option>
+        </select>
+
+        <label for="bg-theme">Background Theme(colors)</label>
+        <select name="bg-theme" id="bg-theme">
+          <option value="Primary Blue">Primary Blue</option>
+        </select>
+
+        <label for="text-size">Text Size(Typography)</label>
+        <select name="text-size" id="text-size">
+          <option value="Large(text-xl)">Large(text-xl)</option>
+        </select>
+
+        <label for="corner-radius">Corner Radius(Borders)</label>
+        <select name="corner-radius" id="corner-radius">
+          <option value="Square(rounded-none)">Square(rounded-none)</option>
+        </select>
+
+        <label for="shadow">Shadow(Depth)</label>
+        <select name="shadow" id="shadow">
+          <option value="Medium(shadow-md)">Medium(shadow-md)</option>
+        </select>
+      </section>
+
+      <section class="right-content">
+        <div class="info">
+          <p>Alex Walker</p>
+          <p>
+            Full-Stack Web Developer building awesome things with Tailwind CSS
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <button type="submit">Submit</button>
+      <button type="reset">Hover Me Slowly!</button>
+    </footer>
+  </body>
+</html>

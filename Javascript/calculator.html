@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <link rel="stylesheet" href="calculator.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Mini Calculator</h2>
+      <div class="input-content">
+        <input type="number" id="firstNumber" placeholder="Number1" />
+        <select name="operator" id="operator" style="width: 50px">
+          <option value="add">+</option>
+          <option value="sub">-</option>
+          <option value="multiply">*</option>
+          <option value="division">/</option>
+          <option value="remainder">%</option>
+          <option value="exponent">**</option>
+        </select>
+        <input type="number" id="secondNumber" placeholder="Number2" />
+      </div>
+      <button id="demoBtn">Calculate Amount</button>
+      <div class="result">
+        <p>Result: <span id="resultValue">----</span></p>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const btn = document.getElementById("demoBtn");
+    const num1 = document.getElementById("firstNumber");
+    const num2 = document.getElementById("secondNumber");
+    const operator = document.getElementById("operator");
+    const finalResult = document.getElementById("resultValue");
+
+    function calcFunction() {
+      finalResult.innerText = "Calculate";
+    }
+
+    btn.addEventListener("click", calcFunction);
+
+    // btn.addEventListener("click", function () {
+    //   const num1 = Number(document.getElementById("firstNumber").value);
+    //   const num2 = Number(document.getElementById("secondNumber").value);
+    //   const operator = document.getElementById("operator").value;
+    //   const result = document.getElementById("resultValue");
+
+    //   if (isNaN(num1) || isNaN(num2)) {
+    //     result.innerText = "Error : Missing Numbers";
+    //   }
+    //   switch (operator) {
+    //     case "add":
+    //       result.innerText = num1 + num2;
+    //       break;
+    //     case "sub":
+    //       result.innerText = num1 - num2;
+    //       break;
+    //     case "multiply":
+    //       result.innerText = num1 * num2;
+    //       break;
+    //     case "division":
+    //       if (num2 === 0) {
+    //         result.innerText = " Can't divided by 0";
+    //       } else {
+    //         result.innerText = num1 / num2;
+    //       }
+    //       break;
+    //     case "remainder":
+    //       result.innerText = num1 % num2;
+    //       break;
+    //     case "exponent":
+    //       result.innerText = num1 ** num2;
+    //       break;
+    //     default:
+    //       result.innerText = "Something wrong.Please check it!";
+    //   }
+    // });
+  </script>
+</html>

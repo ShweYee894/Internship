@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .input-section,
+      .output-section {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        padding: 20px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+
+      /* block => no need to use br tag to break next line */
+      /* label{
+            display: block;
+            font-size : 18px;
+        } */
+
+      input {
+        font-size: 16px;
+        border-radius: 5px;
+        padding: 5px;
+        color: rgb(132, 133, 135);
+        border: none;
+      }
+
+      .wrapper {
+        display: flex;
+        gap: 25px;
+        background-color: rgb(218, 216, 216);
+        width: 500 px;
+        height: 600px;
+        border-radius: 20px;
+        justify-content: center;
+      }
+
+      .card {
+        background-color: rgb(246, 246, 251);
+        width: 250px;
+        height: 200px;
+        padding: 20px;
+        border-radius: 20px;
+        box-sizing: border-box;
+        border: 1px solid rgb(54, 54, 55);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <section class="input-section">
+        <h2>Update Variables</h2>
+
+        <label for="name">Name(String):</label>
+        <input
+          type="text"
+          id="name"
+          title="name"
+          value="Amenda"
+          oninput="myFunction()"
+        />
+
+        <label for="age">Age(Number):</label>
+        <input
+          type="number"
+          id="age"
+          title="age"
+          value="24"
+          min="1"
+          oninput="myFunction()"
+        />
+
+        <label for="status">VIP Status(Boolean):</label>
+        <input
+          type="checkbox"
+          id="status"
+          title="status"
+          checked
+          oninput="myFunction()"
+        />
+        <!-- add 'checked' keyword to know if the user is click the checkbox -->
+
+        <label for="cardColor">Card Color:</label>
+        <input
+          type="color"
+          id="cardColor"
+          title="cardColor"
+          value="#acd342"
+          oninput="myFunction()"
+        />
+      </section>
+
+      <section class="output-section">
+        <h2>Live DOM Output</h2>
+        <div class="card" id="outputCard">
+          <p id="vipStatus"></p>
+          <p id="inputName"></p>
+          <p>Age : <span id="inputAge"></span></p>
+          <script>
+            function myFunction() {
+              let name = document.getElementById("name").value;
+              let age = document.getElementById("age").value;
+              let status;
+              let cardColor = document.getElementById("cardColor").value;
+
+              if ((status = document.getElementById("status").checked)) {
+                document.getElementById("vipStatus").innerHTML = "VIP Customer";
+                document.getElementById("vipStatus").style.backgroundColor =
+                  "yellow";
+                document.getElementById("vipStatus").style.fontStyle = "bold";
+                document.getElementById("vipStatus").style.width = "150px";
+                document.getElementById("vipStatus").style.borderRadius =
+                  "10px";
+                document.getElementById("vipStatus").style.padding = "3px";
+              } else {
+                document.getElementById("vipStatus").innerHTML = "";
+                document.getElementById("vipStatus").style.backgroundColor = "";
+              }
+
+              document.getElementById("inputName").innerHTML = name;
+              document.getElementById("inputAge").innerHTML = age;
+              document.getElementById("outputCard").style.backgroundColor =
+                cardColor;
+            }
+          </script>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

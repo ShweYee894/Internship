@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A complete beginner-friendly JavaScript tutorial covering variables, data types, operators, conditionals, loops, functions, arrays, objects, and DOM manipulation."
+    />
+    <title>JavaScript for Beginners — Complete Learning Module</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Progress Bar -->
+    <div class="progress-track"><div class="progress-fill"></div></div>
+
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero-badge">📘 Beginner Tutorial</div>
+      <h1>Learn JavaScript</h1>
+      <p>
+        A step-by-step guide covering everything you need to start writing
+        JavaScript — from variables to DOM manipulation.
+      </p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-bar" id="main-nav">
+      <ul>
+        <li><a href="#variables">Variables</a></li>
+        <li><a href="#datatypes">Data Types</a></li>
+        <li><a href="#operators">Operators</a></li>
+        <li><a href="#conditionals">Conditionals</a></li>
+        <li><a href="#loops">Loops</a></li>
+        <li><a href="#functions">Functions</a></li>
+        <li><a href="#arrays">Arrays</a></li>
+        <li><a href="#objects">Objects</a></li>
+        <li><a href="#dom">DOM</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+      <!-- ═══════════════ SECTION 1: Variables ═══════════════ -->
+      <section class="section" id="variables">
+        <div class="section-number">Step 1 of 9</div>
+        <h2><span class="icon">📦</span> Variables &amp; Syntax</h2>
+        <p>
+          Variables are containers that store data values. JavaScript gives you
+          three ways to declare them.
+        </p>
+
+        <div class="card">
+          <h3><span class="kw-tag blue">var</span> — The Old Way</h3>
+          <p>
+            <code>var</code> is function-scoped and can be re-declared. It's the
+            original keyword but is rarely used in modern code.
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">var</span> greeting = <span class="str">"Hello"</span>;
+<span class="fn">console</span>.<span class="fn">log</span>(greeting); <span class="cm">// "Hello"</span>
+
+<span class="kw">var</span> greeting = <span class="str">"Hi again"</span>; <span class="cm">// allowed with var</span>
+<span class="fn">console</span>.<span class="fn">log</span>(greeting); <span class="cm">// "Hi again"</span></code></pre>
+          </div>
+          <button class="try-btn" id="try-var">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="card">
+          <h3><span class="kw-tag cyan">let</span> — Reassignable Variable</h3>
+          <p>
+            <code>let</code> is block-scoped. Use it when the value will change
+            later.
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">let</span> score = <span class="num">0</span>;
+<span class="fn">console</span>.<span class="fn">log</span>(score); <span class="cm">// 0</span>
+
+score = <span class="num">10</span>; <span class="cm">// reassignment is OK</span>
+<span class="fn">console</span>.<span class="fn">log</span>(score); <span class="cm">// 10</span></code></pre>
+          </div>
+          <button class="try-btn" id="try-let">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="card">
+          <h3><span class="kw-tag green">const</span> — Constant Value</h3>
+          <p>
+            <code>const</code> is also block-scoped but
+            <strong>cannot be reassigned</strong>. Use it for values that should
+            not change.
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">const</span> PI = <span class="num">3.14159</span>;
+<span class="fn">console</span>.<span class="fn">log</span>(PI); <span class="cm">// 3.14159</span>
+
+<span class="kw">const</span> APP_NAME = <span class="str">"JSLearn"</span>;
+<span class="fn">console</span>.<span class="fn">log</span>(APP_NAME); <span class="cm">// "JSLearn"</span></code></pre>
+          </div>
+          <button class="try-btn" id="try-const">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="tip-box info">
+          <span class="tip-icon">💡</span>
+          <span
+            ><strong>Best practice:</strong> Always use <code>const</code> by
+            default. Switch to <code>let</code> only when you need to reassign.
+            Avoid <code>var</code>.</span
+          >
+        </div>
+      </section>
+
+      <!-- ═══════════════ SECTION 2: Data Types ═══════════════ -->
+      <section class="section" id="datatypes">
+        <div class="section-number">Step 2 of 9</div>
+        <h2><span class="icon">🏷️</span> Data Types</h2>
+        <p>
+          JavaScript has several primitive data types. Each stores a different
+          kind of value.
+        </p>
+
+        <div class="card">
+          <h3>The Five Primitives</h3>
+          <table class="info-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Example</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>String</code></td>
+                <td><code>"Hello"</code></td>
+                <td>Text wrapped in quotes</td>
+              </tr>
+              <tr>
+                <td><code>Number</code></td>
+                <td><code>42</code>, <code>3.14</code></td>
+                <td>Integers and decimals</td>
+              </tr>
+              <tr>
+                <td><code>Boolean</code></td>
+                <td><code>true</code> / <code>false</code></td>
+                <td>Logical true or false</td>
+              </tr>
+              <tr>
+                <td><code>null</code></td>
+                <td><code>null</code></td>
+                <td>Intentional empty value</td>
+              </tr>
+              <tr>
+                <td><code>undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Variable declared but not assigned</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>Checking Types with <code>typeof</code></h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="fn">console</span>.<span class="fn">log</span>(<span class="kw">typeof</span> <span class="str">"Hello"</span>);     <span class="cm">// "string"</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="kw">typeof</span> <span class="num">42</span>);          <span class="cm">// "number"</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="kw">typeof</span> <span class="bool">true</span>);        <span class="cm">// "boolean"</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="kw">typeof</span> <span class="bool">null</span>);        <span class="cm">// "object" (known JS quirk!)</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="kw">typeof</span> <span class="bool">undefined</span>);   <span class="cm">// "undefined"</span></code></pre>
+          </div>
+          <button class="try-btn" id="try-typeof">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="tip-box warn">
+          <span class="tip-icon">⚠️</span>
+          <span
+            ><code>typeof null</code> returns <code>"object"</code> — this is a
+            historic bug in JavaScript that was never fixed!</span
+          >
+        </div>
+      </section>
+
+      <!-- ═══════════════ SECTION 3: Operators ═══════════════ -->
+      <section class="section" id="operators">
+        <div class="section-number">Step 3 of 9</div>
+        <h2><span class="icon">⚙️</span> Operators</h2>
+        <p>
+          Operators let you perform calculations, compare values, and combine
+          conditions.
+        </p>
+
+        <div class="card">
+          <h3>Arithmetic Operators</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">let</span> a = <span class="num">10</span>, b = <span class="num">3</span>;
+
+<span class="fn">console</span>.<span class="fn">log</span>(a <span class="op">+</span> b);  <span class="cm">// 13  (addition)</span>
+<span class="fn">console</span>.<span class="fn">log</span>(a <span class="op">-</span> b);  <span class="cm">// 7   (subtraction)</span>
+<span class="fn">console</span>.<span class="fn">log</span>(a <span class="op">*</span> b);  <span class="cm">// 30  (multiplication)</span>
+<span class="fn">console</span>.<span class="fn">log</span>(a <span class="op">/</span> b);  <span class="cm">// 3.33 (division)</span>
+<span class="fn">console</span>.<span class="fn">log</span>(a <span class="op">%</span> b);  <span class="cm">// 1   (remainder)</span>
+<span class="fn">console</span>.<span class="fn">log</span>(a <span class="op">**</span> b); <span class="cm">// 1000 (exponent)</span></code></pre>
+          </div>
+          <button class="try-btn" id="try-arith">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="card">
+          <h3>Comparison Operators</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="fn">console</span>.<span class="fn">log</span>(<span class="num">5</span> <span class="op">==</span>  <span class="str">"5"</span>);  <span class="cm">// true  (loose — converts type)</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="num">5</span> <span class="op">===</span> <span class="str">"5"</span>);  <span class="cm">// false (strict — checks type too)</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="num">5</span> <span class="op">!=</span>  <span class="str">"5"</span>);  <span class="cm">// false</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="num">5</span> <span class="op">!==</span> <span class="str">"5"</span>);  <span class="cm">// true</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="num">10</span> <span class="op">></span> <span class="num">3</span>);    <span class="cm">// true</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="num">10</span> <span class="op"><=</span> <span class="num">10</span>);  <span class="cm">// true</span></code></pre>
+          </div>
+          <button class="try-btn" id="try-compare">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="card">
+          <h3>Logical Operators</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">let</span> x = <span class="bool">true</span>, y = <span class="bool">false</span>;
+
+<span class="fn">console</span>.<span class="fn">log</span>(x <span class="op">&&</span> y);  <span class="cm">// false (AND — both must be true)</span>
+<span class="fn">console</span>.<span class="fn">log</span>(x <span class="op">||</span> y);  <span class="cm">// true  (OR  — one must be true)</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="op">!</span>x);      <span class="cm">// false (NOT — flips the value)</span></code></pre>
+          </div>
+          <button class="try-btn" id="try-logic">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="tip-box info">
+          <span class="tip-icon">💡</span>
+          <span
+            ><strong>Always use <code>===</code></strong> (strict equality)
+            instead of <code>==</code> to avoid unexpected type-coercion
+            bugs.</span
+          >
+        </div>
+      </section>
+
+      <!-- ═══════════════ SECTION 4: Conditionals ═══════════════ -->
+      <section class="section" id="conditionals">
+        <div class="section-number">Step 4 of 9</div>
+        <h2><span class="icon">🔀</span> Conditional Statements</h2>
+        <p>
+          Conditionals let your code make decisions based on different
+          conditions.
+        </p>
+
+        <div class="card">
+          <h3><code>if</code> / <code>else if</code> / <code>else</code></h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">let</span> age = <span class="num">18</span>;
+
+<span class="kw">if</span> (age <span class="op">>=</span> <span class="num">18</span>) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"You can vote! 🗳️"</span>);
+} <span class="kw">else if</span> (age <span class="op">>=</span> <span class="num">16</span>) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Almost there!"</span>);
+} <span class="kw">else</span> {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Too young to vote."</span>);
+}</code></pre>
+          </div>
+          <button class="try-btn" id="try-if">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="card">
+          <h3><code>switch</code> Statement</h3>
+          <p>
+            Use <code>switch</code> when comparing one value against many
+            possible cases.
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">let</span> day = <span class="str">"Monday"</span>;
+
+<span class="kw">switch</span> (day) {
+  <span class="kw">case</span> <span class="str">"Monday"</span>:
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Start of the week 💪"</span>);
+    <span class="kw">break</span>;
+  <span class="kw">case</span> <span class="str">"Friday"</span>:
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Almost weekend! 🎉"</span>);
+    <span class="kw">break</span>;
+  <span class="kw">default</span>:
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Just another day."</span>);
+}</code></pre>
+          </div>
+          <button class="try-btn" id="try-switch">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+      </section>
+
+      <!-- ═══════════════ SECTION 5: Loops ═══════════════ -->
+      <section class="section" id="loops">
+        <div class="section-number">Step 5 of 9</div>
+        <h2><span class="icon">🔁</span> Loops</h2>
+        <p>
+          Loops let you repeat a block of code multiple times without writing it
+          over and over.
+        </p>
+
+        <div class="card">
+          <h3><code>for</code> Loop</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i <span class="op"><=</span> <span class="num">5</span>; i<span class="op">++</span>) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Count: "</span> <span class="op">+</span> i);
+}</code></pre>
+          </div>
+          <button class="try-btn" id="try-for">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="card">
+          <h3><code>while</code> Loop</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">let</span> count = <span class="num">3</span>;
+
+<span class="kw">while</span> (count <span class="op">></span> <span class="num">0</span>) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Countdown: "</span> <span class="op">+</span> count);
+  count<span class="op">--</span>;
+}
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Go! 🚀"</span>);</code></pre>
+          </div>
+          <button class="try-btn" id="try-while">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="card">
+          <h3><code>forEach</code> — Loop Over Arrays</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">const</span> fruits = [<span class="str">"Apple"</span>, <span class="str">"Banana"</span>, <span class="str">"Cherry"</span>];
+
+fruits.<span class="fn">forEach</span>(<span class="kw">function</span>(fruit) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"I like "</span> <span class="op">+</span> fruit);
+});</code></pre>
+          </div>
+          <button class="try-btn" id="try-foreach">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+      </section>
+
+      <!-- ═══════════════ SECTION 6: Functions ═══════════════ -->
+      <section class="section" id="functions">
+        <div class="section-number">Step 6 of 9</div>
+        <h2><span class="icon">🔧</span> Functions</h2>
+        <p>
+          Functions are reusable blocks of code. JavaScript offers three ways to
+          create them.
+        </p>
+
+        <div class="card">
+          <h3>Function Declaration</h3>
+          <p>
+            The classic way — hoisted, meaning you can call it before it's
+            defined in the code.
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">function</span> <span class="fn">greet</span>(name) {
+  <span class="kw">return</span> <span class="str">"Hello, "</span> <span class="op">+</span> name <span class="op">+</span> <span class="str">"!"</span>;
+}
+
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="fn">greet</span>(<span class="str">"Alice"</span>));
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="fn">greet</span>(<span class="str">"Bob"</span>));</code></pre>
+          </div>
+          <button class="try-btn" id="try-fundecl">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="card">
+          <h3>Function Expression</h3>
+          <p>
+            A function stored in a variable. Not hoisted — must be defined
+            before use.
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">const</span> <span class="fn">add</span> = <span class="kw">function</span>(a, b) {
+  <span class="kw">return</span> a <span class="op">+</span> b;
+};
+
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="fn">add</span>(<span class="num">5</span>, <span class="num">3</span>));  <span class="cm">// 8</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="fn">add</span>(<span class="num">10</span>, <span class="num">20</span>)); <span class="cm">// 30</span></code></pre>
+          </div>
+          <button class="try-btn" id="try-funexpr">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="card">
+          <h3>Arrow Function <code>=&gt;</code></h3>
+          <p>
+            A shorter syntax introduced in ES6. Great for simple, one-line
+            operations.
+          </p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">const</span> <span class="fn">multiply</span> = (a, b) <span class="op">=></span> a <span class="op">*</span> b;
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="fn">multiply</span>(<span class="num">4</span>, <span class="num">5</span>)); <span class="cm">// 20</span>
+
+<span class="kw">const</span> <span class="fn">square</span> = n <span class="op">=></span> n <span class="op">*</span> n;
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="fn">square</span>(<span class="num">7</span>));      <span class="cm">// 49</span>
+
+<span class="cm">// Multi-line arrow function</span>
+<span class="kw">const</span> <span class="fn">describe</span> = (name, age) <span class="op">=></span> {
+  <span class="kw">return</span> name <span class="op">+</span> <span class="str">" is "</span> <span class="op">+</span> age <span class="op">+</span> <span class="str">" years old."</span>;
+};
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="fn">describe</span>(<span class="str">"Sara"</span>, <span class="num">25</span>));</code></pre>
+          </div>
+          <button class="try-btn" id="try-arrow">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+      </section>
+
+      <!-- ═══════════════ SECTION 7: Arrays ═══════════════ -->
+      <section class="section" id="arrays">
+        <div class="section-number">Step 7 of 9</div>
+        <h2><span class="icon">📋</span> Arrays</h2>
+        <p>
+          Arrays store ordered lists of values. They come with many built-in
+          methods.
+        </p>
+
+        <div class="card">
+          <h3>Creating &amp; Accessing Arrays</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">const</span> colors = [<span class="str">"Red"</span>, <span class="str">"Green"</span>, <span class="str">"Blue"</span>];
+
+<span class="fn">console</span>.<span class="fn">log</span>(colors[<span class="num">0</span>]);      <span class="cm">// "Red"   (index starts at 0)</span>
+<span class="fn">console</span>.<span class="fn">log</span>(colors[<span class="num">2</span>]);      <span class="cm">// "Blue"</span>
+<span class="fn">console</span>.<span class="fn">log</span>(colors.<span class="prop">length</span>); <span class="cm">// 3</span></code></pre>
+          </div>
+          <button class="try-btn" id="try-arrbasic">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="card">
+          <h3>Common Array Methods</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">const</span> nums = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>];
+
+nums.<span class="fn">push</span>(<span class="num">4</span>);        <span class="cm">// add to end</span>
+<span class="fn">console</span>.<span class="fn">log</span>(nums);   <span class="cm">// [1, 2, 3, 4]</span>
+
+nums.<span class="fn">pop</span>();          <span class="cm">// remove last</span>
+<span class="fn">console</span>.<span class="fn">log</span>(nums);   <span class="cm">// [1, 2, 3]</span>
+
+<span class="fn">console</span>.<span class="fn">log</span>(nums.<span class="fn">includes</span>(<span class="num">2</span>)); <span class="cm">// true</span>
+<span class="fn">console</span>.<span class="fn">log</span>(nums.<span class="fn">indexOf</span>(<span class="num">3</span>));  <span class="cm">// 2</span>
+
+<span class="cm">// map — transform each element</span>
+<span class="kw">const</span> doubled = nums.<span class="fn">map</span>(n <span class="op">=></span> n <span class="op">*</span> <span class="num">2</span>);
+<span class="fn">console</span>.<span class="fn">log</span>(doubled); <span class="cm">// [2, 4, 6]</span>
+
+<span class="cm">// filter — keep elements that pass a test</span>
+<span class="kw">const</span> big = nums.<span class="fn">filter</span>(n <span class="op">=></span> n <span class="op">></span> <span class="num">1</span>);
+<span class="fn">console</span>.<span class="fn">log</span>(big);     <span class="cm">// [2, 3]</span></code></pre>
+          </div>
+          <button class="try-btn" id="try-arrmethods">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+      </section>
+
+      <!-- ═══════════════ SECTION 8: Objects ═══════════════ -->
+      <section class="section" id="objects">
+        <div class="section-number">Step 8 of 9</div>
+        <h2><span class="icon">🧱</span> Objects</h2>
+        <p>
+          Objects store data as key–value pairs, perfect for representing
+          real-world things.
+        </p>
+
+        <div class="card">
+          <h3>Creating &amp; Accessing Objects</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">const</span> user = {
+  <span class="prop">name</span>: <span class="str">"Alice"</span>,
+  <span class="prop">age</span>: <span class="num">25</span>,
+  <span class="prop">isStudent</span>: <span class="bool">true</span>
+};
+
+<span class="cm">// Dot notation</span>
+<span class="fn">console</span>.<span class="fn">log</span>(user.<span class="prop">name</span>);  <span class="cm">// "Alice"</span>
+
+<span class="cm">// Bracket notation</span>
+<span class="fn">console</span>.<span class="fn">log</span>(user[<span class="str">"age"</span>]); <span class="cm">// 25</span>
+
+<span class="cm">// Modify a property</span>
+user.<span class="prop">age</span> = <span class="num">26</span>;
+<span class="fn">console</span>.<span class="fn">log</span>(user.<span class="prop">age</span>);    <span class="cm">// 26</span></code></pre>
+          </div>
+          <button class="try-btn" id="try-objbasic">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+
+        <div class="card">
+          <h3>Object Methods &amp; Looping</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="kw">const</span> car = {
+  <span class="prop">brand</span>: <span class="str">"Toyota"</span>,
+  <span class="prop">year</span>: <span class="num">2024</span>,
+  <span class="fn">describe</span>() {
+    <span class="kw">return</span> <span class="kw">this</span>.<span class="prop">brand</span> <span class="op">+</span> <span class="str">" ("</span> <span class="op">+</span> <span class="kw">this</span>.<span class="prop">year</span> <span class="op">+</span> <span class="str">")"</span>;
+  }
+};
+
+<span class="fn">console</span>.<span class="fn">log</span>(car.<span class="fn">describe</span>());
+
+<span class="cm">// Loop over keys</span>
+<span class="kw">for</span> (<span class="kw">let</span> key <span class="kw">in</span> car) {
+  <span class="kw">if</span> (<span class="kw">typeof</span> car[key] <span class="op">!==</span> <span class="str">"function"</span>) {
+    <span class="fn">console</span>.<span class="fn">log</span>(key <span class="op">+</span> <span class="str">": "</span> <span class="op">+</span> car[key]);
+  }
+}</code></pre>
+          </div>
+          <button class="try-btn" id="try-objmethods">▶ Try It</button>
+          <div class="live-console"></div>
+        </div>
+      </section>
+
+      <!-- ═══════════════ SECTION 9: DOM ═══════════════ -->
+      <section class="section" id="dom">
+        <div class="section-number">Step 9 of 9</div>
+        <h2><span class="icon">🌐</span> DOM Manipulation</h2>
+        <p>
+          The DOM (Document Object Model) lets JavaScript interact with the HTML
+          page — selecting, changing, and creating elements.
+        </p>
+
+        <div class="card">
+          <h3>Selecting Elements</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="cm">// By ID</span>
+<span class="kw">const</span> title = <span class="dom">document</span>.<span class="fn">getElementById</span>(<span class="str">"main-title"</span>);
+
+<span class="cm">// By CSS selector (first match)</span>
+<span class="kw">const</span> btn = <span class="dom">document</span>.<span class="fn">querySelector</span>(<span class="str">".my-button"</span>);
+
+<span class="cm">// All matches (returns a NodeList)</span>
+<span class="kw">const</span> items = <span class="dom">document</span>.<span class="fn">querySelectorAll</span>(<span class="str">"li"</span>);</code></pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Changing Content &amp; Styles</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="cm">// Change text</span>
+title.<span class="prop">textContent</span> = <span class="str">"New Title!"</span>;
+
+<span class="cm">// Change HTML inside an element</span>
+title.<span class="prop">innerHTML</span> = <span class="str">"&lt;em&gt;Styled Title&lt;/em&gt;"</span>;
+
+<span class="cm">// Change CSS</span>
+title.<span class="prop">style</span>.<span class="prop">color</span> = <span class="str">"#6c63ff"</span>;
+title.<span class="prop">style</span>.<span class="prop">fontSize</span> = <span class="str">"2rem"</span>;</code></pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Event Listeners — Live Demo</h3>
+          <p>Click the button below to see an event listener in action!</p>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="cm">// HTML: &lt;button id="demo-btn"&gt;Click Me&lt;/button&gt;</span>
+<span class="cm">//        &lt;p id="demo-output"&gt;&lt;/p&gt;</span>
+
+<span class="kw">const</span> demoBtn = <span class="dom">document</span>.<span class="fn">getElementById</span>(<span class="str">"demo-btn"</span>);
+<span class="kw">let</span> clicks = <span class="num">0</span>;
+
+demoBtn.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, () <span class="op">=></span> {
+  clicks<span class="op">++</span>;
+  <span class="dom">document</span>.<span class="fn">getElementById</span>(<span class="str">"demo-output"</span>)
+    .<span class="prop">textContent</span> = <span class="str">"Clicked "</span> <span class="op">+</span> clicks <span class="op">+</span> <span class="str">" time(s)!"</span>;
+});</code></pre>
+          </div>
+
+          <!-- Live interactive demo -->
+          <div
+            style="
+              margin-top: 16px;
+              display: flex;
+              align-items: center;
+              gap: 16px;
+            "
+          >
+            <button class="try-btn" id="demo-btn">👆 Click Me!</button>
+            <p
+              id="demo-output"
+              style="
+                color: var(--accent-cyan);
+                font-weight: 600;
+                font-size: 0.95rem;
+              "
+            ></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Creating &amp; Appending Elements</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">JavaScript</span
+              ><button class="copy-btn">Copy</button>
+            </div>
+            <pre><code><span class="cm">// Create a new element</span>
+<span class="kw">const</span> newItem = <span class="dom">document</span>.<span class="fn">createElement</span>(<span class="str">"p"</span>);
+newItem.<span class="prop">textContent</span> = <span class="str">"I was added by JavaScript!"</span>;
+newItem.<span class="prop">style</span>.<span class="prop">color</span> = <span class="str">"#00e88f"</span>;
+
+<span class="cm">// Append to the page</span>
+<span class="dom">document</span>.<span class="prop">body</span>.<span class="fn">appendChild</span>(newItem);</code></pre>
+          </div>
+        </div>
+
+        <div class="tip-box info">
+          <span class="tip-icon">🎉</span>
+          <span
+            ><strong>Congratulations!</strong> You've completed all 9 steps.
+            Practice by building small projects — a calculator, a to-do list, or
+            a quiz game!</span
+          >
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>JavaScript for Beginners — Built with ❤️ as a learning resource</p>
+    </footer>
+
+    <!-- Interactive demo script for DOM section -->
+    <script>
+      (function () {
+        let clicks = 0;
+        const btn = document.getElementById("demo-btn");
+        const out = document.getElementById("demo-output");
+        if (btn && out) {
+          btn.addEventListener("click", () => {
+            clicks++;
+            out.textContent = "Clicked " + clicks + " time(s)! 🎯";
+          });
+        }
+      })();
+    </script>
+
+    <script src="app.js"></script>
+  </body>
+</html>
