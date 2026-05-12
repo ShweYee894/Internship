@@ -30,13 +30,20 @@
 
   <script>
     const btn = document.getElementById("demoBtn");
-    const num1 = document.getElementById("firstNumber");
-    const num2 = document.getElementById("secondNumber");
+    const number1 = document.getElementById("firstNumber");
+    const number2 = document.getElementById("secondNumber");
     const operator = document.getElementById("operator");
-    const finalResult = document.getElementById("resultValue");
+    const result = document.getElementById("resultValue");
 
     function calcFunction() {
-      finalResult.innerText = "Calculate";
+      const num1 = parseFloat(number1.value);
+      const num2 = parseFloat(number2.value);
+      const oper = operator.value;
+
+      if (isNaN(num1) || isNaN(num2)) {
+        result.textContent = "Error : Missing Numbers!";
+        return;
+      }
     }
 
     btn.addEventListener("click", calcFunction);
