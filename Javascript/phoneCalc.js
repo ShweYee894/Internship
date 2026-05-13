@@ -1,6 +1,6 @@
-let firstInputNum = "";
+let currentInput = "";
 let operation = "";
-let nextInputNum = "";
+let previousInput = "";
 
 // Select all number buttons using a class
 const numberButtons = document.querySelectorAll(".inputNumberBtn");
@@ -10,26 +10,27 @@ const clearButton = document.getElementById("clearBtn");
 const deleteButton = document.getElementById("deleteBtn");
 
 function appendNumber(num) {
-  firstInputNum += num;
+  if (num === "." && currentInput.includes(".")) return;
+  currentInput += num;
   updateDisplay();
 }
 
 function appendOperation(op) {
-  if (firstInputNum === "") return;
-  if (nextInputNum !== "") {
+  if (currentInput === "") return;
+  if (previousInput !== "") {
     calculate();
   }
   operation = op;
-  nextInputNum = firstInputNum;
-  firstInputNum = "";
+  previousInput = currentInput;
+  currentInput = "";
   updateDisplay();
 }
 
 function calculate() {
-  if (nextInputNum === "" || firstInputNum === "") return;
+  if (previousInput === "" || currentInput === "") return;
   let result;
-  let num1 = parseFloat(nextInputNum);
-  let num2 = parseFloat(firstInputNum);
+  let num1 = parseFloat(previousInput);
+  let num2 = parseFloat(currentInput);
 
   switch (operation) {
     case "+":
@@ -53,22 +54,27 @@ function calculate() {
       return;
   }
 
-  firstInputNum = result.toString();
+  currentInput = result.toString();
   operation = "";
-  nextInputNum = "";
+  previousInput = "";
   updateDisplay();
 }
 
 function updateDisplay() {
   const displayResult = document.getElementById("inputText");
-  displayResult.value = `${nextInputNum} ${operation} ${firstInputNum}`.trim(); // remove white space in both side
+  displayResult.value = `${previousInput} ${operation} ${currentInput}`.trim(); // remove white space in both side
 }
 
 function clear() {
-  firstInputNum = "";
-  nextInputNum = "";
+  currentInput = "";
+  previousInput = "";
   operation = "";
   document.getElementById("inputText").value = 0;
+}
+
+function deleteLast() {
+  currentInput = currentInput.slice(0, -1);
+  updateDisplay();
 }
 
 // Event Listeners for each button click
@@ -82,3 +88,4 @@ operationButtons.forEach((button) => {
 
 equalButton.addEventListener("click", calculate);
 clearButton.addEventListener("click", clear);
+deleteButton.addEventListener("click", deleteLast);
