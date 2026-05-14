@@ -1,99 +1,296 @@
-let currentInput = "";
-let previousInput = "";
-let operator = null;
+const expressionDisplay = document.getElementById("expression");
+const resultDisplay = document.getElementById("result");
 
-// Handles typing numbers and decimal point
-function appendNumber(num) {
-  if (num === "." && currentInput.includes(".")) return;
+let input = [];
+let justCalculated = false;
 
-  // If a calculation just finished, start fresh
-  if (currentInput === "0" && num !== ".") {
-    currentInput = num.toString();
-  } else {
-    currentInput += num.toString();
-  }
-  updateDisplay(currentInput);
+document.querySelectorAll("button").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const value = btn.dataset.value;
+
+    if (value === "C") {
+      input = [];
+      updateDisplay("");
+      return;
+    }
+
+    if (value === "backspace") {
+      backspace();
+      updateDisplay();
+      return;
+    }
+
+    if (value === "=") {
+      if (input.length === 0) return;
+
+      const result = calculate([...input]);
+
+      // SHOW ORIGINAL + RESULT
+      updateDisplay(result);
+
+      // clear input and show result after each calculation
+      justCalculated = true;
+      return;
+    }
+
+    if (value === "%") {
+      handleInput("%");
+      updateDisplay();
+      return;
+    }
+
+    if (value === "brackets") {
+      handleInput("brackets");
+      updateDisplay();
+      return;
+    }
+    handleInput(value);
+    updateDisplay();
+  });
+});
+
+function updateDisplay(result = "") {
+  expressionDisplay.innerText = input.join("");
+  resultDisplay.innerText = result ? "\n= " + result : "";
 }
 
-// Handles clicking +, -, *, or /
-function chooseOperator(op) {
-  if (currentInput === "") return;
+//input handler for numbers, operators, brackets, decimal and percentage
 
-  // If there is already a previous number, calculate intermediate result first
-  if (previousInput !== "") {
-    compute();
+function handleInput(value) {
+  const operators = ["+", "-", "×", "÷", "%"];
+  const last = input[input.length - 1];
+
+  if (justCalculated) {
+    input = [];
+
+    updateDisplay();
+
+    justCalculated = false;
   }
 
-  operator = op;
-  previousInput = currentInput;
-  currentInput = ""; // Clear current input for the next number
-}
+  // decimal
+  if (value === ".") {
+    if (!last || operators.includes(last) || last === "(") {
+      input.push("0.");
+    } else if (!last.includes(".")) {
+      input[input.length - 1] += ".";
+    }
+    return;
+  }
 
-// Handles clicking Equals (=)
-function compute() {
-  let computation;
-  const prev = parseFloat(previousInput);
-  const current = parseFloat(currentInput);
+  // percentage
+  if (value === "%") {
+    const last = input[input.length - 1];
 
-  if (isNaN(prev) || !operator) return;
+    if (!last || isNaN(last)) return;
 
-  // If user hits '=' without typing a second number, reuse the previous number
-  if (isNaN(current)) {
-    computation = prev;
-  } else {
-    switch (operator) {
-      case "+":
-        computation = prev + current;
-        break;
-      case "-":
-        computation = prev - current;
-        break;
-      case "*":
-        computation = prev * current;
-        break;
-      case "/":
-        computation = prev / current;
-        break;
-      default:
-        return;
+    input.push("%");
+
+    return;
+  }
+
+  // operators
+  if (operators.includes(value)) {
+    if (operators.includes(last)) {
+      input[input.length - 1] = value;
+    } else {
+      input.push(value);
+    }
+    return;
+  }
+
+  // brackets
+  if (value === "brackets") {
+    const last = input[input.length - 1];
+    const openCount = input.filter((x) => x === "(").length;
+    const closeCount = input.filter((x) => x === ")").length;
+
+    // CASE 1: EMPTY INPUT → always open bracket
+    if (input.length === 0) {
+      input.push("(");
+      return;
+    }
+
+    // CASE 2: last is operator OR "(" → open bracket
+    if (!last || ["+", "-", "×", "÷", "("].includes(last)) {
+      input.push("(");
+      return;
+    }
+
+    // CASE 3: if brackets are unbalanced → close bracket
+    if (openCount > closeCount) {
+      input.push(")");
+      return;
+    }
+
+    if (value === ")") {
+      input.push(")");
+
+      return;
+    }
+    // DEFAULT → open bracket
+    input.push("(");
+    return;
+  }
+
+  //numbers;
+  if (!isNaN(value)) {
+    if (!last || operators.includes(last) || last === "(") {
+      input.push(value);
+    } else {
+      input[input.length - 1] += value;
     }
   }
-
-  currentInput = computation.toString();
-  operator = null;
-  previousInput = "";
-  updateDisplay(currentInput);
 }
 
-// 4. Handles clearing the screen (AC button)
-function clearAll() {
-  currentInput = "";
-  previousInput = "";
-  operator = null;
-  updateDisplay("0");
+//backspace handler
+
+function backspace() {
+  const last = input[input.length - 1];
+
+  if (!last) return;
+
+  if (last.length > 1) {
+    input[input.length - 1] = last.slice(0, -1);
+  } else {
+    input.pop();
+  }
 }
 
-// delete last character
+// Function to handle implicit multiplication and evaluate the expression e.g 2(3+4) or (2+3)(4+5) or 2(3)(4) etc.
+function calculateImplicit(expr) {
+  // Replace 2( with 2*(, )2 with )*2, and )( with )*(
+  let cleanedExpr = expr
+    .replace(/(\d)\(/g, "$1*(")
+    .replace(/\)(\d)/g, ")*$1")
+    .replace(/\)\(/g, ")*(");
 
-function deleteLast() {
-  currentInput = currentInput.slice(0, -1);
-  updateDisplay(currentInput || "0"); // Show 0 if currentInput is empty
+  try {
+    return Function('"use strict";return (' + cleanedExpr + ")")();
+  } catch (e) {
+    return "Invalid Expression";
+  }
 }
 
-// add event listeners to buttons
+// calculation logic for operator precedence, brackets and percentage
 
-document.querySelectorAll(".inputNumberBtn").forEach(button => {
-  button.addEventListener("click", () => {
-    appendNumber(button.innerText);
-  });
+function calculate(arr) {
+  // 1. Join the array to inspect the full string expression
+  const fullExpr = arr.join("");
+
+  // 2. Check if the expression contains implicit multiplication like "2(" or ")2" or ")("
+  const hasImplicit = /(\d)\(|\)(\d)|\)\(/.test(fullExpr);
+
+  if (hasImplicit) {
+    // Return the single numeric value from the implicit calculator
+    return calculateImplicit(fullExpr);
+  } else {
+    // Otherwise, return the single numeric value from your standard tokenizer solver
+    return solve(arr);
+  }
+
+  function solve(tokens) {
+    // Clone tokens so we don't destroy the original array
+    let currentTokens = [...tokens];
+    const values = [];
+    const ops = [];
+
+    const precedence = {
+      "+": 1,
+      "-": 1,
+      "×": 2,
+      "÷": 2,
+      "()": 3,
+    };
+
+    function applyOp() {
+      if (values.length < 2) return;
+      const num2 = values.pop(); // Note: Pop num2 first because it's LIFO
+      const num1 = values.pop();
+      const op = ops.pop();
+
+      switch (op) {
+        case "+":
+          values.push(num1 + num2);
+          break;
+        case "-":
+          values.push(num1 - num2);
+          break;
+        case "×":
+          values.push(num1 * num2);
+          break;
+        case "÷":
+          values.push(num1 / num2);
+          break;
+      }
+    }
+
+    while (currentTokens.length) {
+      let token = currentTokens.shift();
+
+      if (token === "%") {
+        const prev = values.pop();
+        values.push(prev / 100);
+        continue;
+      }
+
+      if (token === "(") {
+        let sub = [];
+        let depth = 1;
+
+        while (currentTokens.length) {
+          let t = currentTokens.shift();
+          if (t === "(") depth++;
+          if (t === ")") depth--;
+          if (depth === 0) break;
+          sub.push(t);
+        }
+
+        values.push(solve(sub));
+      } else if (!isNaN(token) && token !== "") {
+        values.push(parseFloat(token));
+      } else {
+        while (
+          ops.length &&
+          precedence[ops[ops.length - 1]] >= precedence[token]
+        ) {
+          applyOp();
+        }
+        ops.push(token);
+      }
+    }
+
+    while (ops.length) applyOp();
+
+    return values[0];
+  }
+}
+
+//keyboard support for inputs and operations
+
+document.addEventListener("keydown", (e) => {
+  const key = e.key;
+
+  if (key >= "0" && key <= "9") {
+    handleInput(key);
+  }
+
+  if (key === "+") handleInput("+");
+  if (key === "-") handleInput("-");
+  if (key === "*") handleInput("×");
+  if (key === "/") handleInput("÷");
+  if (key === ".") handleInput(".");
+  if (key === "%") handleInput("%");
+  if (key === "=") handleInput("=");
+
+  if (key === "Backspace") {
+    backspace();
+  }
+
+  if (key === "Escape") {
+    input = [];
+    updateDisplay("");
+  }
+
+  updateDisplay();
 });
-
-document.querySelectorAll(".operatorBtn").forEach(button => {
-  button.addEventListener("click", () => {
-    chooseOperator(button.innerText);
-  });
-});
-
-document.getElementById("equalBtn").addEventListener("click", compute);
-document.getElementById("clearBtn").addEventListener("click", clearAll);
-document.getElementById("deleteBtn").addEventListener("click", deleteLast);
